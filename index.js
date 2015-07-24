@@ -7,7 +7,6 @@ function qp(uri) {
   var queryParams = [];
   var match;
 
-  uri = uri || window.location.href;
   uri = decodeURIComponent(uri.substring(uri.indexOf('?') + 1));
 
   if (!uri) {
