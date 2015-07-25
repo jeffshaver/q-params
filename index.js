@@ -1,8 +1,8 @@
-module.exports = qp;
+module.exports = q_params;
 
 // Parsing rules taken from http://zzzzbov.com/blag/querystring-hell
 
-function qp(uri) {
+function q_params(uri) {
   var qsr = /([^&;]*?={0,1}[^&;]*)(?:[&;]{0,1})/g;
   var queryParams = [];
   var match;

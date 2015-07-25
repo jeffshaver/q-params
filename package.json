@@ -1,5 +1,5 @@
 {
-  "name": "qp",
+  "name": "q-params",
   "version": "0.0.1",
   "description": "JS Utility to parse query parameters from a URI",
   "main": "index.js",
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/jeffshaver/qp.git"
+    "url": "git+https://github.com/jeffshaver/q-params.git"
   },
   "keywords": [
     "query",
@@ -17,9 +17,9 @@
   "author": "Jeff Shaver <jeff.e.shaver@gmail.com> (http://jeffshaver.me)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/jeffshaver/qp/issues"
+    "url": "https://github.com/jeffshaver/q-params/issues"
   },
-  "homepage": "https://github.com/jeffshaver/qp#readme",
+  "homepage": "https://github.com/jeffshaver/q-params#readme",
   "devDependencies": {
     "tap-spec": "^4.0.2",
     "tape": "^4.0.1"
