@@ -1,39 +1,64 @@
-module.exports = q_params;
+const queryStringRegex = /([^&;]*?={0,1}[^&;]*)(?:[&;]{0,1})/g
 
-// Parsing rules taken from http://zzzzbov.com/blag/querystring-hell
-
-function q_params(uri) {
-  var qsr = /([^&;]*?={0,1}[^&;]*)(?:[&;]{0,1})/g;
-  var queryParams = [];
-  var match;
-
-  uri = decodeURIComponent(uri.substring(uri.indexOf('?') + 1));
-
-  if (!uri) {
-    throw new Error('No query string :(');
+function parseQueryStringFromUri (uri) {
+  if (!uri.includes('?')) {
+    throw new Error(`No query string found within "${uri}"`)
   }
 
-  match = qsr.exec(uri);
+  const queryString = decodeURIComponent(
+    uri.substring(
+      uri.indexOf('?') + 1
+    )
+  )
 
-  while (match[0] !== '') {
-    queryParams.push(match[1]);
-    match = qsr.exec(uri);
-  }
+  return queryString
+}
 
-  return queryParams.map(function(queryParam) {
-    var obj = {};
-    var indexOfEqual = queryParam.indexOf('=');
-    obj[queryParam.substring(0, (indexOfEqual !== -1 ? indexOfEqual : queryParam.length))] = indexOfEqual !== -1 ? queryParam.substring(indexOfEqual + 1) : null;
-    return obj;
-  }).reduce(function(prev, cur) {
-    var currentKey = Object.keys(cur)[0];
-    if (prev[currentKey] && typeof prev[currentKey] === 'string') {
-      prev[currentKey] = [prev[currentKey], cur[currentKey]];
-    } else if (prev[currentKey]) {
-      prev[currentKey].push(cur[currentKey]);
+function parseQueryParameters (queryString) {
+  const queryParameters = queryString.split(/[&;]/)
+
+  return queryParameters
+}
+
+function createQueryParameterMap (queryParameters) {
+  const queryParameterMap = {}
+
+  queryParameters.forEach((queryParameter) => {
+    const hasNoValue = !queryParameter.includes('=')
+    const [key, value] = queryParameter.split('=')
+    const keyExists = queryParameterMap[key] !== undefined
+    const valueToInsert = hasNoValue ? null : value
+
+    if (keyExists) {
+      queryParameterMap[key] = [
+        ...Array.from(
+          Array.isArray(queryParameterMap[key])
+            ? queryParameterMap[key]
+            : [queryParameterMap[key]]
+        ),
+        valueToInsert
+      ]
     } else {
-      prev[currentKey] = cur[currentKey];
+      queryParameterMap[key] = valueToInsert
     }
-    return prev;
-  });
-};
+
+  })
+
+  return queryParameterMap
+}
+
+function parse (uri) {
+  if (uri === undefined) {
+    throw new Error('You must pass in a uri')
+  }
+
+  const queryString = parseQueryStringFromUri(uri)
+  console.log(queryString)
+  const queryParameters = parseQueryParameters(queryString)
+  console.log(queryParameters)
+  const queryParameterMap = createQueryParameterMap(queryParameters)
+
+  return queryParameterMap
+}
+
+module.exports = parse

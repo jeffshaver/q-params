@@ -36,14 +36,14 @@ var emptyKeyNullTest = function emptyKeyNullTest(t, uri) {
 
 test('q-params tests with &', function(t) {
   t.plan(6);
-  basicTests(t, 'http://jsfiddle.net?nomin=true&jqnomin=true&help=on%20e&help=two&buzz&fizz=&=bar');
+  basicTests(t, 'http://jsfiddle.net?nomin=true&jqnomin=true&help=on%20e&help=two&buzz&fizz=&=bar&');
   emptyKeyNullTest(t, 'http://jsfiddle.net?&nomin=true&jqnomin=true&help=on%20e&help=two&buzz&fizz=');
   t.end();
 });
 
 test('q-params tests with ;', function(t) {
   t.plan(6);
-  basicTests(t, 'http://jsfiddle.net?nomin=true;jqnomin=true;help=on%20e&help=two;buzz;fizz=;=bar');
+  basicTests(t, 'http://jsfiddle.net?nomin=true;jqnomin=true;help=on%20e&help=two;buzz;fizz=;=bar&');
   emptyKeyNullTest(t, 'http://jsfiddle.net?;nomin=true;jqnomin=true;help=on%20e;help=two;buzz;fizz=');
   t.end();
 });
